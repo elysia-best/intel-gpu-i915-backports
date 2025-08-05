@@ -39,6 +39,32 @@ CPTCFG_DRM_BRIDGE=y
 CPTCFG_DRM_PANEL_BRIDGE=y
 CPTCFG_DRM_I915_LOW_LEVEL_TRACEPOINTS=y
 
+CONFIG_DRM_RADEON=m
+CONFIG_DRM_AMDGPU=m
+CONFIG_DRM_AMDGPU_SI=y
+CONFIG_DRM_AMDGPU_CIK=y
+CONFIG_DRM_AMDGPU_USERPTR=y
+# CONFIG_DRM_AMDGPU_WERROR is not set
+ 
+#
+# ACP (Audio CoProcessor) Configuration
+#
+CONFIG_DRM_AMD_ACP=y
+# end of ACP (Audio CoProcessor) Configuration
+ 
+#
+# Display Engine Configuration
+#
+CONFIG_DRM_AMD_DC=y
+CONFIG_DRM_AMD_DC_FP=y
+CONFIG_DRM_AMD_DC_SI=y
+# CONFIG_DEBUG_KERNEL_DC is not set
+CONFIG_DRM_AMD_SECURE_DISPLAY=y
+# end of Display Engine Configuration
+ 
+CONFIG_HSA_AMD=y
+CONFIG_HSA_AMD_SVM=y
+
 #
 # Display Interface Bridges
 #

@@ -79,45 +79,9 @@ jobs:
           name: i915_dsm-${{ matrix.version }}_epyc7002
           path: out/i915_dsm-${{ matrix.version }}_epyc7002.zip
 
-  build_pve:
-    runs-on: ubuntu-latest
-    container: debian:12
-    env:
-      DEBIAN_FRONTEND: noninteractive
-      DPKG_COLORS: always
-      FORCE_UNSAFE_CONFIGURE: 1
-
-    steps:
-      - name: Install Dependencies
-        run: |
-          echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/00noconfirm
-          apt-get update && \
-            apt-get install -yq build-essential devscripts dkms dh-dkms
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          path: src
-
-      - name: Build
-        working-directory: src
-        run: |
-          REF=${{ github.event.ref }}
-          case "$REF" in
-            refs/tags/*) BUILD_VERSION=${REF##*-} ;;
-            *) BUILD_VERSION= ;;
-          esac
-          make BUILD_CONFIG=nodrm BUILD_VERSION=$BUILD_VERSION i915dkmsdeb-pkg
-
-      - name: Save to artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: i915_pve
-          path: "*.deb"
-
   release:
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [build_dsm, build_pve]
+    needs: [build_dsm]
     runs-on: ubuntu-latest
     permissions:
       contents: write
